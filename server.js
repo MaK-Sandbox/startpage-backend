@@ -23,6 +23,6 @@ app.get("/api/computer-info", (req, res) => {
   res.json(result);
 });
 
-app.listen(port, () => {
+app.listen(port, "127.0.0.1", () => {
   console.log(`Example app listening on: http://localhost:${port}`);
 });
