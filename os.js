@@ -10,7 +10,6 @@ function getComputerData() {
   const totalMemory = convertFromBytesToGB(os.totalmem());
   const usedMemory = totalMemory - freeMemory;
   const uptime = os.uptime();
-  const loadAverage = os.loadavg();
   const ip4 = os.networkInterfaces()["Wi-Fi"][3].address;
   const cpus = os.cpus();
   const release = os.release();
@@ -19,7 +18,6 @@ function getComputerData() {
     machine: `${username}@${hostname}`,
     ip4,
     OS: `${osName} ${release} ${machine}`,
-    loadAverage,
     uptime: convertSecondsToString(uptime),
     shell,
     cpu: `${cpus[0].model.trim()} (${cpus.length}) @ ${cpus[0].speed} MHz)`,
