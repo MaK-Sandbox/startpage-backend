@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const getComputerData = require("./os.js");
+const fetchKimaiActivity = require("./kimai.js");
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,28 @@ const port = 3000;
  */
 app.use(express.json());
 app.use(cors());
+
+app.get("/api/kimai-activity", (req, res) => {
+  async function resolveKimai() {
+    try {
+      const result = await fetchKimaiActivity();
+      const dataArray = [];
+
+      result.forEach((activity) => {
+        let dataObj = {};
+        dataObj.id = activity.id;
+        dataObj.begin = activity.begin;
+        dataArray.push(dataObj);
+      });
+      res.json(dataArray);
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  resolveKimai();
+});
 
 app.get("/api/computer-info", (req, res) => {
   let result = getComputerData();
