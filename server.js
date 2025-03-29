@@ -28,6 +28,8 @@ app.get("/api/kimai-activity", (req, res) => {
       result.forEach((activity) => {
         let dataObj = {};
         dataObj.id = activity.id;
+        dataObj.activityName = activity.activity.name;
+        dataObj.projectName = activity.project.name;
         dataObj.begin = activity.begin;
         dataArray.push(dataObj);
       });
