@@ -1,10 +1,25 @@
 const express = require("express");
 const cors = require("cors");
+const { WebSocketServer } = require("ws");
 const getComputerData = require("./os.js");
 const fetchKimaiActivity = require("./kimai.js");
+const http = require("http");
 
 const app = express();
 const port = 3000;
+const server = http.createServer(app);
+
+const wss = new WebSocketServer({ server });
+
+wss.on("connection", (socket) => {
+  console.log("A client just connected!");
+
+  socket.send("Hello from the backend");
+
+  socket.on("close", () => {
+    console.log("A client disconnected.");
+  });
+});
 
 /**
  * Middleware:
@@ -48,6 +63,6 @@ app.get("/api/computer-info", (req, res) => {
   res.json(result);
 });
 
-app.listen(port, "127.0.0.1", () => {
+server.listen(port, "127.0.0.1", () => {
   console.log(`Example app listening on: http://localhost:${port}`);
 });
